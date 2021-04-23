@@ -1,4 +1,4 @@
-# m151_project
+# M151_project
 
 ## Projekt-Beschrieb "Gebäude-Konstruktion"
 
