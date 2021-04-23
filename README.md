@@ -2,7 +2,7 @@
 
 ## Projekt-Beschrieb "Gebäude-Konstruktion"
 
-PDF-Version erhältich unter -> /Dokumentation/M151_Projektbeschrieb_NicolasAlex_Kingsman
+PDF-Version erhältich unter -> /Dokumentation/M151_Projektbeschrieb_NicolasAlex_Kingsman.pdf
 
 ### Beschreibung
 
