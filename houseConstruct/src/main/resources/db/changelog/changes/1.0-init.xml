@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="Nicolas.Kingsman" id="1.0-init">
+        <sql>
+            CREATE EXTENSION IF NOT EXISTS pgcrypto;
+        </sql>
+
+        <createTable tableName="group">
+            <column name="group_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="group_description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createSequence schemaName="public"
+                        incrementBy="1"
+                        sequenceName="group_sequence"/>
+
+        <createTable tableName="person">
+            <column name="person_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="person_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email_adress" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="telephone_number" type="varchar(255)"/>
+        </createTable>
+        <createSequence schemaName="public"
+                        incrementBy="1"
+                        sequenceName="person_sequence"/>
+
+        <createTable tableName="user">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="user_password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_person_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_group_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createSequence schemaName="public"
+                        incrementBy="1"
+                        sequenceName="user_sequence"/>
+        <addForeignKeyConstraint constraintName="fk_person"
+                                 baseTableName="user"
+                                 baseColumnNames="fk_person_id"
+                                 referencedTableName="person"
+                                 referencedColumnNames="person_id"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint constraintName="fk_group"
+                                 baseTableName="user"
+                                 baseColumnNames="fk_group_id"
+                                 referencedTableName="group"
+                                 referencedColumnNames="group_id"
+                                 onDelete="CASCADE"/>
+                
+        <createTable tableName="building">
+            <column name="building_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="building_description" type="varchar(255)"/>
+            <column name="adress" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="real">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_person_id" type="bigint"/>
+        </createTable>
+        <createSequence schemaName="public"
+                        incrementBy="1"
+                        sequenceName="building_sequence"/>
+        <addForeignKeyConstraint constraintName="fk_person"
+                                 baseTableName="building"
+                                 baseColumnNames="fk_person_id"
+                                 referencedTableName="person"
+                                 referencedColumnNames="person_id"
+                                 onDelete="CASCADE"/>
+
+        <createTable tableName="floor">
+            <column name="floor_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="floor_number" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="floor_description" type="varchar(255)"/>
+            <column name="fk_building_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createSequence schemaName="public"
+                        incrementBy="1"
+                        sequenceName="floor_sequence"/>
+        <addForeignKeyConstraint constraintName="fk_building"
+                                 baseTableName="floor"
+                                 baseColumnNames="fk_building_id"
+                                 referencedTableName="building"
+                                 referencedColumnNames="building_id"
+                                 onDelete="CASCADE"/>
+
+        <createTable tableName="room">
+            <column name="room_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="room_description" type="varchar(255)"/>
+            <column name="fk_floor_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createSequence schemaName="public"
+                        incrementBy="1"
+                        sequenceName="room_sequence"/>
+        <addForeignKeyConstraint constraintName="fk_floor"
+                                 baseTableName="room"
+                                 baseColumnNames="fk_floor_id"
+                                 referencedTableName="floor"
+                                 referencedColumnNames="floor_id"
+                                 onDelete="CASCADE"/>
+
+        <createTable tableName="furniture">
+            <column name="furniture_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="furniture_description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="real">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createSequence schemaName="public"
+                        incrementBy="1"
+                        sequenceName="furniture_sequence"/>
+
+        <createTable tableName="furniture_placement">
+            <column name="furniture_placement_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="fk_room_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_furniture_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createSequence schemaName="public"
+                        incrementBy="1"
+                        sequenceName="furniture_placement_sequence"/>
+        <addForeignKeyConstraint constraintName="fk_room"
+                                 baseTableName="furniture_placement"
+                                 baseColumnNames="fk_room_id"
+                                 referencedTableName="room"
+                                 referencedColumnNames="room_id"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint constraintName="fk_furniture"
+                                 baseTableName="furniture_placement"
+                                 baseColumnNames="fk_furniture_id"
+                                 referencedTableName="furniture"
+                                 referencedColumnNames="furniture_id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,54 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'org.liquibase.gradle' version '2.0.3'
+	id "org.flywaydb.flyway" version "6.4.1"
+}
+
+group = 'ch.bbzw.m151'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.liquibase:liquibase-core'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+def db_url = 'jdbc:postgresql://localhost:5432/houseConstruct'
+def db_user = 'admin'
+def db_password = 'passwort'
+
+flyway {
+    url = db_url
+    user = db_user
+    password = db_password
+}
+
+liquibase {
+    activities {
+        main {
+            changeLogFile 'src/main/resources/db/changelog/master.xml'
+            url db_url
+            username db_user
+            password db_password
+        }
+    }
+}
+
+test {
+	useJUnitPlatform()
+}
