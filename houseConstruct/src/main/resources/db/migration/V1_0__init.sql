@@ -80,7 +80,7 @@ CREATE SEQUENCE room_sequence OWNED BY public.room.room_id;
 CREATE TABLE public.furniture
 (
     furniture_id BIGINT NOT NULL,
-    furniture_descrption VARCHAR(255) NOT NULL,
+    furniture_description VARCHAR(255) NOT NULL,
     price REAL NOT NULL,
     CONSTRAINT pk_furniture PRIMARY KEY (furniture_id)
 );
