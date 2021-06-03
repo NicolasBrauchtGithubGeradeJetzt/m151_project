@@ -27,6 +27,11 @@ public class UserController {
         return null;
     }
 
+    @PostMapping("/set/{id}")
+    public User change(@RequestBody User u, @PathVariable long id) {
+        return null;
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
         

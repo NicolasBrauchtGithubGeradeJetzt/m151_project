@@ -1,6 +1,7 @@
 package ch.bbzw.m151.houseConstruct.controller;
 
 import ch.bbzw.m151.houseConstruct.model.Building;
+import ch.bbzw.m151.houseConstruct.model.Floor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,23 @@ public class BuildingController {
         return null;
     }
 
+    @GetMapping("/floor/{building_id}")
+    public Optional<Floor> getAllFloor(@PathVariable long building_id) {
+        return null;
+    }
+
+    @GetMapping("/blueprint/{building_id}")
+    public String getBlueprint(@PathVariable long building_id) {
+        return null;
+    }
+
     @PostMapping("/")
     public Building add(@RequestBody Building b) {
+        return null;
+    }
+
+    @PostMapping("/set/{id}")
+    public Building change(@RequestBody Building b, @PathVariable long id) {
         return null;
     }
 

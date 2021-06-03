@@ -1,6 +1,7 @@
 package ch.bbzw.m151.houseConstruct.controller;
 
 import ch.bbzw.m151.houseConstruct.model.Room;
+import ch.bbzw.m151.houseConstruct.model.Furniture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,23 @@ public class RoomController {
         return null;
     }
 
+    @GetMapping("/furniture/{room_id}")
+    public Optional<Furniture> getAllFurniture(@PathVariable long room_id) {
+        return null;
+    }
+
     @PostMapping("/")
     public Room add(@RequestBody Room r) {
+        return null;
+    }
+
+    @PostMapping("/{room_id}/addFurniture/{furniture_id}")
+    public Room addFurniture(@PathVariable("room_id") long room_id, @PathVariable("furniture_id") long furniture_id) {
+        return null;
+    }
+    
+    @PostMapping("/set/{id}")
+    public Room change(@RequestBody Room r, @PathVariable long id) {
         return null;
     }
 

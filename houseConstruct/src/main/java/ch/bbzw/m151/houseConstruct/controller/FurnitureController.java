@@ -27,6 +27,11 @@ public class FurnitureController {
         return null;
     }
 
+    @PostMapping("/set/{id}")
+    public Furniture change(@RequestBody Furniture r, @PathVariable long id) {
+        return null;
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
         
