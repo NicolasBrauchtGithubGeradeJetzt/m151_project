@@ -15,13 +15,20 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
+    private final AuthenticationProvider authenticationProvider;
+
     @Autowired
-    public WebSecurityConfig() {
-        
+    public WebSecurityConfig(final AuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+    }
+
+    @Autowired
+    public void globalSecurityConfiguration(final AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(authenticationProvider);
     }
 }

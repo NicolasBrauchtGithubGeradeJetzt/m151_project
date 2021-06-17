@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "group")
 public class Group implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -19,5 +20,9 @@ public class Group implements Serializable {
 
     public Group(){
 
+    }
+
+    public UserGroup getUserGroup(){
+        return description;
     }
 }
