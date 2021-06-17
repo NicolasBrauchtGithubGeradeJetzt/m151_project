@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 @Entity
-@Table(name = "furniture")
+@Table(name = "furniture", schema = "public")
 public class Furniture implements Serializable {
     private static final long serialVersionUID = 1L;
 

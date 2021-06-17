@@ -29,11 +29,12 @@ public class LoginService {
         System.out.println("Login initiated");
         System.out.println("Email -> " + email);
         System.out.println("Password -> " + password);
-        final User user = userRepo.checkPassword(email, password);
+        //final User user = userRepo.checkPassword(email, password);
+        final User user = null;
         if (user != null) {
             System.out.println("Login success");
             //redisTemplate.opsForHash().put(REDIS_KEY, user.getUsername(), user.getUserGroup().toString());
-            return Optional.of((user.getGroup()).getUserGroup());
+            return Optional.of((user.getGroup()).getDescription());
         }
         System.out.println("Login failed");
         

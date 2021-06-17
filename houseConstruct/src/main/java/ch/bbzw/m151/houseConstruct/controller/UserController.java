@@ -1,6 +1,7 @@
 package ch.bbzw.m151.houseConstruct.controller;
 
 import ch.bbzw.m151.houseConstruct.model.User;
+import ch.bbzw.m151.houseConstruct.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +13,21 @@ import java.util.Optional;
 @RequestMapping(path = "/user")
 public class UserController {
 
+    private final UserService userService;
+
+    @Autowired
+    public UserController(final UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("/")
     public List<User> getAll() {
-        return null;
+        return userService.getAll();
     }
 
     @GetMapping("/{id}")
     public Optional<User> get(@PathVariable long id) {
-        return null;
+        return userService.get(id);
     }
 
     @PostMapping("/")

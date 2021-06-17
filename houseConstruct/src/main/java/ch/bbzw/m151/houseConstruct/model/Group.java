@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "group")
+@Table(name = "group", schema = "public")
 public class Group implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -18,11 +18,19 @@ public class Group implements Serializable {
     @Column(name = "group_description", nullable = false, unique = true)
     private UserGroup description;
 
-    public Group(){
+    protected Group(){
 
     }
 
-    public UserGroup getUserGroup(){
+    public Group(UserGroup description){
+        this.description = description;
+    }
+
+    public long getId(){
+        return id;
+    }
+
+    public UserGroup getDescription(){
         return description;
     }
 }

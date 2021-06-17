@@ -27,13 +27,13 @@ public class PgAuthenticationProvider implements AuthenticationProvider {
         String email = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        if (loginService.login(email, password).isPresent()) {
+        /*if (loginService.login(email, password).isPresent()) {
             final UserGroup userGroup = loginService.login(email, password).get();
             return new UsernamePasswordAuthenticationToken(
                     email, 
                     password,
                     Collections.singletonList(new SimpleGrantedAuthority(userGroup.toString())));
-        }
+        }*/
 
         return null;
     }

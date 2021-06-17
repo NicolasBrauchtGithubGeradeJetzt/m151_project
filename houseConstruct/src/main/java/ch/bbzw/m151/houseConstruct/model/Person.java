@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "person")
+@Table(name = "person", schema = "public")
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,34 @@ public class Person implements Serializable {
     @Column(name = "telephone_number", unique = true)
     private String telephone;
 
-    public Person(){
+    protected Person(){
 
+    }
+
+    public Person(String name, String surname, String email, String telephone){
+        this.name = name;
+        this.surname = name;
+        this.email = email;
+        this.telephone = telephone;
+    }
+
+    public long getId(){
+        return id;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getSurname(){
+        return surname;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public String getTelephone(){
+        return telephone;
     }
 }
