@@ -24,7 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.authorizeRequests()
+            .regexMatchers("/token")
+            .permitAll().anyRequest().authenticated()
+            .and().httpBasic()
+            .and().csrf().disable();
     }
 
     @Autowired

@@ -8,10 +8,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "user", schema = "public")
-/*@NamedQuery(name = "User.checkPassword", query = "SELECT u " 
+@NamedQuery(name = "User.checkPassword", query = "SELECT u " 
                                                     + "FROM User u "
                                                     + "WHERE u.person.email = :email "
-                                                    + "AND user_password = public.crypt(text(:password), text(user_password))")*/
+                                                    + "AND user_password = public.crypt(text(:password), text(user_password))")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 

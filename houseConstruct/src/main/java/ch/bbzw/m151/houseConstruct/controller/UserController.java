@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/user")
+@PreAuthorize("hasAuthority('Admin')")
 public class UserController {
 
     private final UserService userService;

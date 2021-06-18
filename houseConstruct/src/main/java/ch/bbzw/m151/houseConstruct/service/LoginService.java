@@ -26,17 +26,12 @@ public class LoginService {
         /*if (redisTemplate.opsForHash().hasKey(REDIS_KEY, username)) {
             return Optional.of(UserGroup.valueOf(redisTemplate.opsForHash().get(REDIS_KEY, username).toString()));
         }*/
-        System.out.println("Login initiated");
-        System.out.println("Email -> " + email);
-        System.out.println("Password -> " + password);
-        //final User user = userRepo.checkPassword(email, password);
-        final User user = null;
+        final User user = userRepo.checkPassword(email, password);
         if (user != null) {
             System.out.println("Login success");
-            //redisTemplate.opsForHash().put(REDIS_KEY, user.getUsername(), user.getUserGroup().toString());
+            //redisTemplate.opsForHash().put(REDIS_KEY, user.getPerson().getEmail(), user.getGroup().getDescription().toString());
             return Optional.of((user.getGroup()).getDescription());
         }
-        System.out.println("Login failed");
         
         return Optional.empty();
     }
