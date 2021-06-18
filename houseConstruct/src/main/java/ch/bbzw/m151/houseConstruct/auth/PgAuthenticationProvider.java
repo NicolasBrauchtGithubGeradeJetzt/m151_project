@@ -29,6 +29,8 @@ public class PgAuthenticationProvider implements AuthenticationProvider {
 
         if (loginService.login(email, password).isPresent()) {
             final UserGroup userGroup = loginService.login(email, password).get();
+            System.out.println("UserGroup");
+            System.out.println(userGroup.toString());
             return new UsernamePasswordAuthenticationToken(
                     email, 
                     password,
