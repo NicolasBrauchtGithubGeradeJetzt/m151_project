@@ -26,11 +26,11 @@ public class User implements Serializable {
     @ColumnTransformer(write = "crypt(?, gen_salt('bf', 8))")
     private String password;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "fk_person_id", nullable = false, unique = true)
     private Person person;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "fk_group_id", nullable = false, unique = true)
     private Group group;
 

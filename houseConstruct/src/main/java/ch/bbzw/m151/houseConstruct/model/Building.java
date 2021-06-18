@@ -23,11 +23,38 @@ public class Building implements Serializable {
     @Column(name = "price", nullable = false, unique = true)
     private float price;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "fk_person_id", nullable = false, unique = true)
     private Person person;
 
-    public Building(){
+    protected Building(){
 
+    }
+
+    public Building(String description, String adress, float price, Person person){
+        this.description = description;
+        this.adress = adress;
+        this.price = price;
+        this.person = person;
+    }
+
+    public long getId(){
+        return id;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public String getAdress(){
+        return adress;
+    }
+
+    public float getPrice(){
+        return price;
+    }
+
+    public Person getPerson(){
+        return person;
     }
 }

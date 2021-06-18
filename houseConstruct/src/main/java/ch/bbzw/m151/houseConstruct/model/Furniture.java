@@ -22,10 +22,32 @@ public class Furniture implements Serializable {
     @Column(name = "price", nullable = false, unique = true)
     private float price;
 
-    @ManyToMany(mappedBy = "furnitures", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "furnitures", fetch = FetchType.EAGER)
     private Set<Room> rooms = new HashSet<Room>();
 
-    public Furniture(){
+    protected Furniture(){
 
+    }
+
+    public Furniture(String description, float price, Set<Room> rooms){
+        this.description = description;
+        this.price = price;
+        this.rooms = rooms;
+    }
+
+    public long getId(){
+        return id;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public float getPrice(){
+        return price;
+    }
+
+    public Set<Room> getRooms(){
+        return rooms;
     }
 }

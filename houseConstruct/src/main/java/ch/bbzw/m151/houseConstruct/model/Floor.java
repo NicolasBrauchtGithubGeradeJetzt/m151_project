@@ -20,11 +20,33 @@ public class Floor implements Serializable {
     @Column(name = "floor_description", unique = true)
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "fk_building_id", nullable = false, unique = true)
     private Building building;
 
-    public Floor(){
+    protected Floor(){
 
+    }
+
+    public Floor(int number, String description, Building building){
+        this.number = number;
+        this.description = description;
+        this.building = building;
+    }
+
+    public long getId(){
+        return id;
+    }
+
+    public int getNumber(){
+        return number;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public Building getBuilding(){
+        return building;
     }
 }

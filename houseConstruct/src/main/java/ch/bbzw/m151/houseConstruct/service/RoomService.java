@@ -1,7 +1,7 @@
 package ch.bbzw.m151.houseConstruct.service;
 
-import ch.bbzw.m151.houseConstruct.model.User;
-import ch.bbzw.m151.houseConstruct.repo.UserRepo;
+import ch.bbzw.m151.houseConstruct.model.Room;
+import ch.bbzw.m151.houseConstruct.repo.RoomRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
@@ -13,49 +13,49 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-@CacheConfig(cacheNames = {"user"})
-public class UserService {
+@CacheConfig(cacheNames = {"room"})
+public class RoomService {
 
-    private final UserRepo userRepo;
+    private final RoomRepo roomRepo;
 
     @Autowired
-    public UserService(final UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public RoomService(final RoomRepo roomRepo) {
+        this.roomRepo = roomRepo;
     }
 
     @Transactional(readOnly = true)
     @Cacheable(key = "0")
-    public List<User> getAll() {
-        final Iterable<User> user = userRepo.findAll();
+    public List<Room> getAll() {
+        final Iterable<Room> room = roomRepo.findAll();
         return StreamSupport
-                .stream(user.spliterator(), false)
+                .stream(room.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     @Cacheable(key = "#id", unless = "#result == null")
-    public Optional<User> get(final long id) {
-       return Optional.ofNullable(userRepo.findById(id));
+    public Optional<Room> get(final long id) {
+       return Optional.ofNullable(roomRepo.findById(id));
     }
 
     @Transactional
-    @CachePut(key = "#user.id")
+    @CachePut(key = "#room.id")
     @CacheEvict(key = "0")
-    public User add(final User user) {
-        return userRepo.save(user);
+    public Room add(final Room room) {
+        return roomRepo.save(room);
     }
 
     @Transactional
-    public Optional<User> update(final User user) {
-        final Optional<User> optionalUser = this.get(user.getId());
-        if (optionalUser.isPresent()) {
-            return Optional.of(userRepo.save(user));
+    public Optional<Room> update(final Room room) {
+        final Optional<Room> optionalRoom = this.get(room.getId());
+        if (optionalRoom.isPresent()) {
+            return Optional.of(roomRepo.save(room));
         }
         return Optional.empty();
     }
 
     @Caching(evict = {@CacheEvict(key = "#id"), @CacheEvict(key = "0")})
     public void delete(final long id) {
-        userRepo.deleteById(id);
+        roomRepo.deleteById(id);
     }
 }

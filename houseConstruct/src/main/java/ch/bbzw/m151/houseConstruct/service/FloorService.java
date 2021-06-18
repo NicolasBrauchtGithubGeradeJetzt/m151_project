@@ -1,7 +1,7 @@
 package ch.bbzw.m151.houseConstruct.service;
 
-import ch.bbzw.m151.houseConstruct.model.User;
-import ch.bbzw.m151.houseConstruct.repo.UserRepo;
+import ch.bbzw.m151.houseConstruct.model.Floor;
+import ch.bbzw.m151.houseConstruct.repo.FloorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
@@ -13,49 +13,49 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-@CacheConfig(cacheNames = {"user"})
-public class UserService {
+@CacheConfig(cacheNames = {"floor"})
+public class FloorService {
 
-    private final UserRepo userRepo;
+    private final FloorRepo floorRepo;
 
     @Autowired
-    public UserService(final UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public FloorService(final FloorRepo floorRepo) {
+        this.floorRepo = floorRepo;
     }
 
     @Transactional(readOnly = true)
     @Cacheable(key = "0")
-    public List<User> getAll() {
-        final Iterable<User> user = userRepo.findAll();
+    public List<Floor> getAll() {
+        final Iterable<Floor> floor = floorRepo.findAll();
         return StreamSupport
-                .stream(user.spliterator(), false)
+                .stream(floor.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     @Cacheable(key = "#id", unless = "#result == null")
-    public Optional<User> get(final long id) {
-       return Optional.ofNullable(userRepo.findById(id));
+    public Optional<Floor> get(final long id) {
+       return Optional.ofNullable(floorRepo.findById(id));
     }
 
     @Transactional
-    @CachePut(key = "#user.id")
+    @CachePut(key = "#floor.id")
     @CacheEvict(key = "0")
-    public User add(final User user) {
-        return userRepo.save(user);
+    public Floor add(final Floor floor) {
+        return floorRepo.save(floor);
     }
 
     @Transactional
-    public Optional<User> update(final User user) {
-        final Optional<User> optionalUser = this.get(user.getId());
-        if (optionalUser.isPresent()) {
-            return Optional.of(userRepo.save(user));
+    public Optional<Floor> update(final Floor floor) {
+        final Optional<Floor> optionalFloor = this.get(floor.getId());
+        if (optionalFloor.isPresent()) {
+            return Optional.of(floorRepo.save(floor));
         }
         return Optional.empty();
     }
 
     @Caching(evict = {@CacheEvict(key = "#id"), @CacheEvict(key = "0")})
     public void delete(final long id) {
-        userRepo.deleteById(id);
+        floorRepo.deleteById(id);
     }
 }

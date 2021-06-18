@@ -2,6 +2,7 @@ package ch.bbzw.m151.houseConstruct.controller;
 
 import ch.bbzw.m151.houseConstruct.model.Building;
 import ch.bbzw.m151.houseConstruct.model.Floor;
+import ch.bbzw.m151.houseConstruct.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,21 @@ import java.util.Optional;
 @RequestMapping(path = "/building")
 public class BuildingController {
 
+    private final BuildingService buildingService;
+
+    @Autowired
+    public BuildingController(final BuildingService buildingService) {
+        this.buildingService = buildingService;
+    }
+
     @GetMapping("/")
     public List<Building> getAll() {
-        return null;
+        return buildingService.getAll();
     }
 
     @GetMapping("/{id}")
     public Optional<Building> get(@PathVariable long id) {
-        return null;
+        return buildingService.get(id);
     }
 
     @GetMapping("/floor/{building_id}")
@@ -35,16 +43,16 @@ public class BuildingController {
 
     @PostMapping("/")
     public Building add(@RequestBody Building b) {
-        return null;
+        return buildingService.add(b);
     }
 
-    @PostMapping("/set/{id}")
-    public Building change(@RequestBody Building b, @PathVariable long id) {
-        return null;
+    @PutMapping("/")
+    public Building change(@RequestBody Building b) {
+        return buildingService.update(b).orElse(null);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
-        
+        buildingService.delete(id);
     }
 }

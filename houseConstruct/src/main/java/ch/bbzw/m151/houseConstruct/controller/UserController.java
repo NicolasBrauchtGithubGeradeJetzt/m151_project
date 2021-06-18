@@ -31,17 +31,17 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public User add(@RequestBody User u) {
-        return null;
+    public User add(@RequestBody final User u) {
+        return userService.add(u);
     }
 
-    @PostMapping("/set/{id}")
-    public User change(@RequestBody User u, @PathVariable long id) {
-        return null;
+    @PutMapping("/")
+    public User change(@RequestBody User u) {
+        return userService.update(u).orElse(null);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
-        
+        userService.delete(id);
     }
 }

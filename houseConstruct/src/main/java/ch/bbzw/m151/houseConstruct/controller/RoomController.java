@@ -1,6 +1,7 @@
 package ch.bbzw.m151.houseConstruct.controller;
 
 import ch.bbzw.m151.houseConstruct.model.Room;
+import ch.bbzw.m151.houseConstruct.service.RoomService;
 import ch.bbzw.m151.houseConstruct.model.Furniture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,14 +14,21 @@ import java.util.Optional;
 @RequestMapping(path = "/room")
 public class RoomController {
 
+    private final RoomService roomService;
+
+    @Autowired
+    public RoomController(final RoomService roomService) {
+        this.roomService = roomService;
+    }
+
     @GetMapping("/")
     public List<Room> getAll() {
-        return null;
+        return roomService.getAll();
     }
 
     @GetMapping("/{id}")
     public Optional<Room> get(@PathVariable long id) {
-        return null;
+        return roomService.get(id);
     }
 
     @GetMapping("/furniture/{room_id}")
@@ -30,7 +38,7 @@ public class RoomController {
 
     @PostMapping("/")
     public Room add(@RequestBody Room r) {
-        return null;
+        return roomService.add(r);
     }
 
     @PostMapping("/{room_id}/addFurniture/{furniture_id}")
@@ -38,13 +46,13 @@ public class RoomController {
         return null;
     }
     
-    @PostMapping("/set/{id}")
-    public Room change(@RequestBody Room r, @PathVariable long id) {
-        return null;
+    @PutMapping("/")
+    public Room change(@RequestBody Room r) {
+        return roomService.update(r).orElse(null);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
-        
+        roomService.delete(id);
     }
 }

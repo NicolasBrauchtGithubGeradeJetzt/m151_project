@@ -19,11 +19,11 @@ public class Room implements Serializable {
     @Column(name = "room_description", unique = true)
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "fk_floor_id", nullable = false, unique = true)
     private Floor floor;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinTable(name = "furniture_placement",
             joinColumns = {
                     @JoinColumn(name = "fk_room_id", referencedColumnName = "room_id", nullable = false, updatable = false)},
@@ -31,7 +31,25 @@ public class Room implements Serializable {
                     @JoinColumn(name = "fk_furniture_id", referencedColumnName = "furniture_id", nullable = false, updatable = false)})
     private Set<Furniture> furnitures = new HashSet<Furniture>();
 
-    public Room(){
+    protected Room(){
 
+    }
+
+    public Room(String description, Floor floor, Set<Furniture> furnitures){
+            this.description = description;
+            this.floor = floor;
+            this.furnitures = furnitures;
+    }
+
+    public long getId(){
+        return id;
+    }
+
+    public Floor getFloor(){
+        return floor;
+    }
+
+    public Set<Furniture> getFurnitures(){
+            return furnitures;
     }
 }
